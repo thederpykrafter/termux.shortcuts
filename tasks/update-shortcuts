@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+function shortcut() {
+  cp $1/$2 ~/.shortcuts/$(echo $2 | sed 's/\.sh//')
+}
+
+shortcut ~/Dev/sh/get-repos get-repos.sh
+
