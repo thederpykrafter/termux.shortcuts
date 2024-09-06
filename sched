@@ -1,0 +1,65 @@
+#!/bin/bash
+prev=$PWD
+
+
+function find_xlsx() {
+  cd $1
+  spreadsheet=$(fd .xlsx)
+  if [[ ! $spreadsheet == "" ]]; then
+    echo "moving: $spreadsheet"
+    echo "to: ~/Dev/sh/work-sched/xlsx/$spreadsheet"
+    mv $spreadsheet ~/Dev/sh/work-sched/xlsx/$spreadsheet
+  else
+    echo "Schedule up to date."
+  fi
+}
+
+if [ -d ~/Downloads ]; then
+  find_xlsx ~/Downloads
+else
+  find_xlsx ~/storage/shared/Download
+fi
+
+cd ~/Dev/sh/work-sched/
+
+sheet=$(fd . sheets --type f | tail -n1)
+sheetclean=$(fd . sheets | tail -n1 | sed "s/sheets\///" | sed "s/\.csv//")
+
+days=$(bat $sheet | head -n1 | tr "," "\n")
+
+events=$(bat $sheet | head -n2 | tail -n1  | sed "s/,/\n/g" | sed "s/^$/-/g" | sed "s/ /:/g" | tail -n 14)
+
+dates=$(bat $sheet | head -n3 | tail -n1 | sed "s/,/\n/g" | sed "s/2024\///g")
+
+if [[ $* == "" ]]; then
+  echo -e "\x1b[94mJustin\x1b[m"
+  schedule=$(bat $sheet | grep "Justin Kulczyski" | sed "s/,/\n/g" | sed "s/^$/-/g" | tail -n 14)
+else
+  echo -e "\x1b[94m$*\x1b[m"
+  schedule=$(bat $sheet | grep -i "$*" | sed "s/,/\n/g" | sed "s/^$/-/g" | tail -n 14)
+fi
+
+for x in $days; do
+    echo $x
+done
+
+echo -e "\x1b[15A"
+for x in $dates; do
+  if [[ $x == $(date +'%m/%d') ]]; then
+    echo -e "\x1b[3C\x1b[94m"$x"\x1b[m"
+  else
+    echo -e "\x1b[3C"$x
+  fi
+done
+
+echo -e "\x1b[15A"
+for x in $schedule; do
+    echo -e "\x1b[11C"$x
+done
+
+echo -e "\x1b[15A"
+for x in $events; do
+    echo -e "\x1b[22C"$x
+done
+
+cd $prev
