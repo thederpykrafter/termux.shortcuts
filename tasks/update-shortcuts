@@ -5,6 +5,5 @@ function shortcut() {
 }
 
 shortcut ~/Dev/sh/get-repos get-repos.sh
-shortcut ~/Dev/sh/work-sched sched
 shortcut ~/Dev/sh/universal-setup setup.sh
 shortcut ~/Dev/sh/nogit nogit.sh
