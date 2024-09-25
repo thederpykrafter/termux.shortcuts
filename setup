@@ -10,13 +10,5 @@ fi
 
 source ~/Dev/sh/universal-setup/repos.sh
 
-if ! grep "projectmap" ~/.wakatime.cfg &> /dev/null; then
- echo "
-[projectmap]
-$HOME/.oh-my-zsh/custom/(\d+)/ = zsh
-^/home/thederpykrafter/.oh-my-zsh/custom/(\d+)/ = project{0}
 
-[git_submodule_projectmap]
-$HOME/.oh-my-zsh/custom/themes = cryptic.zsh-theme
-^/home/thederpykrafter/.oh-my-zsh/custom/themes(\d+)/ = project{0}" >> ~/.wakatime.cfg
 fi
