@@ -3,18 +3,18 @@
 prev=$PWD
 
 repos=$(find ~ -name ".git" \
-	| grep -v ".local" \
-	| grep -v ".cache" \
-	| sed "s/\.git//g")
+    | grep -v ".local" \
+    | grep -v ".cache" \
+  | sed "s/\.git//g")
 
 for repo in $repos; do
-	cd $repo
+  cd $repo
 
-	curr_repo=$(echo $repo \
-		| sed "s/\/data\/data\/com.termux\/files\/home\///" \
-		| sed "s/\/home\/thederpykrafter\///")
+  curr_repo=$(echo $repo \
+      | sed "s/\/data\/data\/com.termux\/files\/home\///" \
+    | sed "s/\/home\/thederpykrafter\///")
 
-	echo -e "\e[94mRepo\e[m:"$curr_repo
+  echo -e "\e[94mRepo\e[m:"$curr_repo
 
   # check for gh remote
   if ! git fetch origin &> /dev/null; then
@@ -41,7 +41,7 @@ for repo in $repos; do
       gh repo create $curr_repo -s . --push --public
     fi
 
-  # check for unstaged files
+    # check for unstaged files
   elif git status | grep -w "Changes not staged" &> /dev/null; then
     echo -e "\x1b[93mUnstaged changes\x1b[m"
 
@@ -52,7 +52,7 @@ for repo in $repos; do
       lazygit
     fi
 
-  # check for untracked files
+    # check for untracked files
   elif git status | grep -w "Untracked files" &> /dev/null; then
     echo -e "\x1b[93mUntracked files\x1b[m"
 
@@ -63,7 +63,7 @@ for repo in $repos; do
       lazygit
     fi
 
-  # check if pull needed
+    # check if pull needed
   elif git status | grep -w "git pull" &> /dev/null; then
     echo -e "\x1b[94mFiles need to be pulled from remote\x1b[m"
 
@@ -74,7 +74,7 @@ for repo in $repos; do
       lazygit
     fi
 
-  # check if files need to be committed
+    # check if files need to be committed
   elif git status | grep -w "Changes to be committed:" &> /dev/null; then
     echo -e "\x1b[96mFiles need to be committed\x1b[m"
 
@@ -84,8 +84,8 @@ for repo in $repos; do
     then
       lazygit
     fi
-  
-  # check if clean
+
+    # check if clean
   else
     echo -e "\x1b[92mUp to date\x1b[m"
   fi
