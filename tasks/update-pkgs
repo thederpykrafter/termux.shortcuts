@@ -1,4 +1,9 @@
 #!/bin/bash
 
-pkg update -y
-pkg upgrade -y
+if commamd -v nala &> /dev/null; then
+  nala update -y
+  nala upgrade -y
+else
+  pkg update -y
+  pkg upgrade -y
+fi
