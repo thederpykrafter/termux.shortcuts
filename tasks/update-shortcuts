@@ -4,7 +4,12 @@ function shortcut() {
   cp $1/$2 ~/.shortcuts/$(echo $2 | sed 's/\.sh//')
 }
 
+function task() {
+  cp $1/$2 ~/.shortcuts/$(echo task/$2 | sed 's/\.sh//')
+}
+
 shortcut ~/Dev/sh/get-repos get-repos.sh
 shortcut ~/Dev/sh/universal-setup setup.sh
 shortcut ~/Dev/sh/nogit nogit.sh
-shortcut ~/Dev/sh/work-sched tasks/work-sched
+
+task ~/Dev/sh/work-sched work-sched
