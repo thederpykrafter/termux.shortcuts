@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [ -d ~/universal-setup ]; then
+  if [ ! -d ~/Dev/sh ]; then
+    mkdir -p ~/Dev/sh
+  fi
+  mv ~/universal-setup ~/Dev/sh/
+elif [ ! -d ~/Dev/sh/universal-setup ]; then
+  gh repo clone thederpykrafter/universal-setup.git ~/Dev/sh/universal-setup
+fi
+
 if uname -a | grep "NITRO-Endeavour" > /dev/null || uname -a | grep "NITRO-Arch" > /dev/null; then
   source ~/Dev/sh/universal-setup/endeavour.sh
 elif uname -a | grep "Ubuntu" > /dev/null; then
@@ -40,14 +49,10 @@ team_drive =
     # @formatter:on
   fi
 
-  if [ -f ~/Dev/sh/work-sched/Retail\ Schedule\ .xlsx ]; then
-    cd ~/Dev/sh/work-sched
-    rm -rf Retail\ Schedule\ .xlsx
-    rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
-  else
-    rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
-  fi
+  rclone sync Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
+
   if git status | grep "Retail" &> /dev/null; then
+    cd ~/Dev/sh/work-sched
     git add Retail\ Schedule\ .xlsx
     git commit -m "update schedule"
   fi
