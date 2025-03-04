@@ -14,11 +14,41 @@ source ~/Dev/sh/universal-setup/repos.sh
 if [ ! -d ~/.tmux/plugins/tpm ]; then
   git clone git@github.com:tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-if [ ! -d ~/.config/tmux ]; then
+if [ ! -d ~/.config/tmux/.git ]; then
   git clone git@github.com:thederpykrafter/tmux ~/.config/tmux
+fi
+if [ ! -d ~/.config/tmux/plugins/tpm ]; then
+  ~/.tmux/plugins/tpm/bin/install_plugins
 fi
 
 # wakatime config
 if ! grep "api_key = waka_" ~/.wakatime.cfg &> /dev/null; then
   ~/Dev/sh/universal-setup/wakatime.sh
+fi
+
+# rclone for google drive
+if command -v rclone &> /dev/null; then
+  if [ ! -f ~/.config/rclone/rclone.conf ]; then
+    mkdir -p ~/.config/rclone/
+    # @formatter:off
+    echo '[Drive]
+type = drive
+scope = drive
+token = {"access_token":"ya29.a0AXeO80QUsrIEvYaDAE47wayW2alVfEeffyR7zJAXRChqk1PZMn7FzoGGpnm30AgsYn4F9vm1vWI3PMQe9iDZF_akDQRy2CFbZ0nLsojU5-TodG8oikRBBDLedhtuqLIHU-Lfe-F1ErAKqMFtWfNrp_dRQrb1KbStRbop_cq-DQaCgYKAcwSARISFQHGX2Miq4CooU9j4hUDcdCoQWgQIg0177","token_type":"Bearer","refresh_token":"1//04Wl2aatQK1s_CgYIARAAGAQSNwF-L9IrTbW4CgcjlUj2qU1qD6xLp8Vd3ukQ4sj44dWZITNsGVMaeYh6n80wWSK-SHyw1fc0UFg","expiry":"2025-02-13T21:20:09.185368173-05:00"}
+team_drive =
+' > ~/.config/rclone/rclone.conf
+    # @formatter:on
+  fi
+
+  if [ -f ~/Dev/sh/work-sched/Retail\ Schedule\ .xlsx ]; then
+    cd ~/Dev/sh/work-sched
+    rm -rf Retail\ Schedule\ .xlsx
+    rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
+  else
+    rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
+  fi
+  if git status | grep "modified Retail" &> /dev/null; then
+    git add Retail\ Schedule\ .xlsx
+    git commit -m "update schedule"
+  fi
 fi
