@@ -1,11 +1,11 @@
 #!/bin/zsh
 
 function shortcut() {
-  cp $1/$2 ~/.shortcuts/$(echo $2 | sed 's/\.sh//')
+  cp -rf $1/$2 ~/.shortcuts/$(echo $2 | sed 's/\.sh//')
 }
 
 function task() {
-  cp $1/$2 ~/.shortcuts/$(echo task/$2 | sed 's/\.sh//')
+  cp -rf $1/$2 ~/.shortcuts/$(echo task/$2 | sed 's/\.sh//')
 }
 
 shortcut ~/Dev/sh/get-repos get-repos.sh
