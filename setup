@@ -47,7 +47,7 @@ team_drive =
   else
     rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
   fi
-  if git status | grep "modified Retail" &> /dev/null; then
+  if git status | grep "Retail" &> /dev/null; then
     git add Retail\ Schedule\ .xlsx
     git commit -m "update schedule"
   fi
