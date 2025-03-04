@@ -49,11 +49,11 @@ team_drive =
     # @formatter:on
   fi
 
-  rclone sync Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
+  rclone sync Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/sched/ --drive-shared-with-me
 
   if git status | grep "Retail" &> /dev/null; then
     cd ~/Dev/sh/work-sched
-    git add Retail\ Schedule\ .xlsx
+    git add .
     git commit -m "update schedule"
   fi
 fi
