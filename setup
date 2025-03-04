@@ -51,9 +51,10 @@ team_drive =
 
   rclone sync Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/sched/ --drive-shared-with-me
 
+  cd ~/Dev/sh/work-sched
   if git status | grep "Retail" &> /dev/null; then
-    cd ~/Dev/sh/work-sched
     git add .
     git commit -m "update schedule"
+    echo -e "\e[91mSchedule updated!\e[m"
   fi
 fi
