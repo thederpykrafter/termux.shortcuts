@@ -1,20 +1,14 @@
 #!/bin/bash
 
 # get updated schedule
-if [ -f ~/Dev/sh/work-sched/Retail\ Schedule\ .xlsx ]; then
-  # remove old and replace with new
-  rm -rf ~/Dev/sh/work-sched/Retail\ Schedule\ .xlsx
-  rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
-else
-  # get schedule if not found
-  rclone copy Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/ --drive-shared-with-me
-fi
+rclone sync Drive:Retail\ Schedule\ .xlsx ~/Dev/sh/work-sched/sched/ --drive-shared-with-me
 
 # push schedule changes to git
 cd ~/Dev/sh/work-sched
-if git status | grep "modified Retail" &> /dev/null; then
-  git add Retail\ Schedule\ .xlsx
+if git status | grep "Retail" &> /dev/null; then
+  git add .
   git commit -m "update schedule"
+  echo -e "\e[91mSchedule updated!\e[m"
 fi
 
-xdg-open Retail\ Schedule\ .xlsx
+xdg-open sched/Retail\ Schedule\ .xlsx
