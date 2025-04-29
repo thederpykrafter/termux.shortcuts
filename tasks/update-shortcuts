@@ -18,7 +18,9 @@ mv ~/.shortcuts/tasks/main.py ~/.shortcuts/tasks/organize-downloads
 
 cd ~/.shortcuts
 git pull
-if git status | grep "modified" &> /dev/null; then
+if git status | grep "pull" &> /dev/null; then
+  git pull
+elif git status | grep "modified" &> /dev/null; then
   git add .
   git commit -m "update shortcuts"
   git push
