@@ -13,6 +13,7 @@ shortcut ~/Dev/sh/universal-setup setup.sh
 shortcut ~/Dev/sh/nogit nogit.sh
 
 task ~/Dev/sh/work-sched work-sched
+task ~/Dev/python/Organize-by-extensions main.py
 
 cd ~/.shortcuts
 git pull
