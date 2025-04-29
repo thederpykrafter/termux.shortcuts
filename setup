@@ -1,5 +1,18 @@
 #!/bin/bash
 
+if ! git config --get user.name &> /dev/null; then
+  git config --global user.name thederpykrafter
+  git config --global user.email "thederpykrafter@gmail.com"
+  git config --global init.defaultBranch main
+  git config --global core.editor nvim
+  git config --global color.ui auto
+  echo -e "\e[94mSuccesfully configured Git\e[m"
+fi
+
+if ! gh auth status > /dev/null 2>&1; then
+  gh auth login
+fi
+
 if [ -d ~/universal-setup ]; then
   if [ ! -d ~/Dev/sh ]; then
     mkdir -p ~/Dev/sh
@@ -17,18 +30,21 @@ elif uname -a | grep "Android" > /dev/null; then
   source ~/Dev/sh/universal-setup/termux.sh
 fi
 
-source ~/Dev/sh/universal-setup/repos.sh
+# change shell to zsh
+if echo $SHELL | grep "bash" > /dev/null; then
+  chsh -s zsh
+fi
 
-# tmux config
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-  git clone git@github.com:tmux-plugins/tpm ~/.tmux/plugins/tpm
+# oh-my-zsh setup
+if [ ! -d ~/.oh-my-zsh ]; then
+  echo -e "\e[91m** EXIT ZSH TO CONTINUE INSTALL"
+  echo -e "** PRESS <ENTER> TO CONTINUE **\e[m"
+  read -e
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  echo -e "\e[94mSuccesfully installed oh-my-zsh\e[m"
 fi
-if [ ! -d ~/.config/tmux/.git ]; then
-  git clone git@github.com:thederpykrafter/tmux ~/.config/tmux
-fi
-if [ ! -d ~/.config/tmux/plugins/tpm ]; then
-  ~/.tmux/plugins/tpm/bin/install_plugins
-fi
+
+source ~/Dev/sh/universal-setup/repos.sh
 
 # wakatime config
 if ! grep "api_key = waka_" ~/.wakatime.cfg &> /dev/null; then
@@ -56,5 +72,22 @@ team_drive =
     git add .
     git commit -m "update schedule"
     echo -e "\e[91mSchedule updated!\e[m"
+  fi
+fi
+
+if [ -d /run/media/thederpykrafter/KINGSTON ];
+then
+  if [ -d ~/Dev/sh/universal-setup ];
+  then
+    echo -e "\e[94mBacking up Universal Setup to Kingston\e[m"
+    sudo cp -ru ~/Dev/sh/universal-setup /run/media/thederpykrafter/KINGSTON/
+    echo -e "\e[94mBackup complete!\e[m"
+  fi
+elif [ -d ~/storage/shared/Documents ]; then
+  if [ -d ~/Dev/sh/universal-setup ];
+  then
+    echo -e "\e[94mBacking up Universal Setup to Documents\e[m"
+    cp -ru ~/Dev/sh/universal-setup ~/storage/shared/Documents
+    echo -e "\e[94mBackup complete!\e[m"
   fi
 fi
