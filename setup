@@ -91,3 +91,5 @@ elif [ -d ~/storage/shared/Documents ]; then
     echo -e "\e[94mBackup complete!\e[m"
   fi
 fi
+
+echo "Setup complete" | lolcat
