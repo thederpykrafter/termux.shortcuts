@@ -5,11 +5,7 @@ function shortcut() {
 }
 
 function task() {
-  if [ -n $3 ]; then
-    yes | cp -rf $1/$2 ~/.shortcuts/tasks/$(echo $2 | sed 's/\.sh//')
-  else
-    yes | cp -rf $1/$2 ~/.shortcuts/tasks/$(echo $3 | sed 's/\.sh//')
-  fi
+  yes | cp -rf $1/$2 ~/.shortcuts/tasks/$(echo $2 | sed 's/\.sh//')
 }
 
 shortcut ~/Dev/sh/get-repos get-repos.sh
@@ -17,7 +13,8 @@ shortcut ~/Dev/sh/universal-setup setup.sh
 shortcut ~/Dev/sh/nogit nogit.sh
 
 task ~/Dev/sh/work-sched work-sched
-task ~/Dev/python/Organize-by-extensions main.py organize-downloads
+task ~/Dev/python/Organize-by-extensions main.py
+mv ~/.shortcuts/tasks/main.py ~/.shortcuts/tasks/organize-downloads
 
 cd ~/.shortcuts
 git pull
