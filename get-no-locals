@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tudo $HOME/Dev/sh/get-repos/get-no-local.sh
