@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+#@formatter:off
+shells=`cat <<EOF
+zsh -dif
+zsh
+bash
+EOF`
+
+`echo -e "$shells" | fzf --preview="" \
+  --header='Select shell to execute'`
