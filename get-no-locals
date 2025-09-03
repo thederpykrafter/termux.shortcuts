@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tudo $HOME/Dev/sh/get-repos/get-no-local.sh
+tudo $HOME/Dev/bash/get-repos/get-no-local.sh
 echo -en "\e[91m"
 read -sn 1 -p "Press any key to exit"
 echo -en "\e[m"
